@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  kong:
+    image: kong:latest
+    ports:
+      - 8000:8000
+      - 8001:8001
+    volumes:
+      - ./kong/kong.yaml:/etc/kong/kong.yml
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/etc/kong/kong.yml
+    networks:
+      - kong-net
+
+  blog-service:
+    build:
+      context: ./blog_service
+    networks:
+      - kong-net
+
+  user-auth-service:
+    build:
+      context: ./user_service
+    networks:
+      - kong-net
+
+  admin-service:
+    build:
+      context: ./admin_service
+    networks:
+      - kong-net
+
+networks:
+  kong-net:
+    driver: bridge

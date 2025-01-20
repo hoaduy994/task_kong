@@ -1,0 +1,21 @@
+services:
+  - name: blog_service
+    url: http://blog-service:8000
+    routes:
+      - name: blog-route
+        paths:
+          - /api/blog
+
+  - name: user_service
+    url: http://user-auth-service:8000
+    routes:
+      - name: auth-route
+        paths:
+          - /api/auth
+
+  - name: admin_service
+    url: http://admin-service:8000
+    routes:
+      - name: admin-route
+        paths:
+          - /admin
